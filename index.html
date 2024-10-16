@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JournalJourney</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+</head>
+<body>
+    <h1>JournalJourney</h1>
+    <h3>Welcome, {{ session.username }}</h3>
+    <form method="post">
+        <textarea name="diary_entry" rows="4" cols="50" required></textarea><br>
+        <input type="submit" value="Add Entry">
+    </form>
+        <a style="text-decoration:none" href="{{ url_for('entries') }}">
+            <input type="button" value="View Your Entries">
+        </a>
+        <p></p>
+        <a style="text-decoration:none" href="{{ url_for('logout') }}">
+            <input type="button" value="Logout">
+        </a>
+        <br>
+</body>
+</html>
