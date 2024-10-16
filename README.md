@@ -1,0 +1,2 @@
+# journaljourney
+Smart Journal Website
