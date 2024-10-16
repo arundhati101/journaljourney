@@ -1,0 +1,129 @@
+.playfair-display {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.shadows-into-light-regular {
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+    font-family: 'Playfair Display',serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    color: lightcoral;
+    font-family: 'Playfair Display',serif;
+    text-align: center;
+    margin-top: 20px;
+}
+
+h3 {
+    color: #555555;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display',serif;
+}
+
+input[type="text"] {
+    font-family: 'Playfair Display',serif;
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+input[type="submit"] {
+    font-family: 'Playfair Display',serif;
+    background-color: lightcoral;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #e86464;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 80%;
+    max-width: 1000px;
+}
+
+li {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    text-align: left;
+}
+
+li:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+li p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.entry{
+    font-size:1.1em;
+    font-family: 'Playfair Display',serif;
+}
+
+li input[type="submit"] {
+    background-color: lightcoral;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin-top: 7px;
+
+}
+
+li input[type="submit"]:hover {
+    background-color: #e86464;
+}
+
+a {
+    display: inline-block;
+    background-color: lightcoral;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 25px;
+    margin: 10px 5px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: #e86464;
+}
