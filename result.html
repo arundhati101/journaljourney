@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary Entry Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+</head>
+<body>
+    <h1>Diary Entry Result</h1>
+    <p><strong>Entry:</strong> {{ diary_entry }}</p>
+    <p><strong>Category:</strong> {{ category }}</p>
+    <p><strong>Sentiment:</strong> {{ sentiment }}</p>
+    <p><strong>Sentiment Scores:</strong></p>
+    <ul>
+        <li>Positive: {{ sentiment_scores['pos'] }}</li>
+        <li>Neutral: {{ sentiment_scores['neu'] }}</li>
+        <li>Negative: {{ sentiment_scores['neg'] }}</li>
+        <li>Compound: {{ sentiment_scores['compound'] }}</li>
+    </ul>
+    <h2>Previous Entries</h2>
+    <ul>
+        {% for index, entry in enumerate(diary_entries) %}
+            <li>
+                <strong>Entry:</strong> {{ entry['text'] }} -
+                <strong>Category:</strong> {{ entry['category'] }},
+                <strong>Sentiment:</strong> {{ entry['sentiment'] }}
+                <form method="POST" action="{{ url_for('delete_entry', entry_index=index) }}" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/">Go back to the main page</a>
+</body>
+</html>
