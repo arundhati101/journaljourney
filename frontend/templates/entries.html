@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JournalJourney - Entries</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+
+    <style>
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            width: 85%;
+            max-width: 900px;
+            margin: 0 auto 18px auto;
+        }
+
+        .top-bar .nav-left,
+        .top-bar .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-bar .search-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .top-bar a {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>JournalJourney</h1>
+    <h3>Your Diary Entries</h3>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <p style="color: green;">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="top-bar">
+        <div class="nav-left">
+            {% if session.user_id %}
+            <a href="{{ url_for('dashboard.dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('insights.insights') }}">AI Insights</a>
+            <a href="{{ url_for('journal.wordcloud_page') }}">Word Cloud</a>
+            <a href="{{ url_for('export.export_csv') }}">Export CSV</a>
+            <a href="{{ url_for('export.export_pdf') }}">Export PDF</a>
+            {% endif %}
+            <a href="{{ url_for('journal.index') }}">Add New Entry</a>
+        </div>
+
+        <div class="nav-right">
+            <form class="search-form" method="GET" action="{{ url_for('journal.entries') }}">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search your entries..."
+                    value="{{ search_query }}"
+                >
+                <input type="submit" value="Search">
+            </form>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </div>
+    </div>
+
+    <ul>
+        {% for entry in diary_entries %}
+        <li>
+
+            <p class="entry">
+                {{ entry.text }}
+            </p>
+
+            <p>
+                <b>Category:</b>
+                {{ entry.category }}
+            </p>
+
+            <p>
+                <b>Sentiment:</b>
+                {{ entry.sentiment }}
+            </p>
+
+            {% if entry.emotion %}
+            <p>
+                <b>Emotion:</b>
+                {{ entry.emotion|capitalize }}
+            </p>
+            {% endif %}
+
+            {% if entry.tag_list %}
+            <p>
+                <b>Tags:</b>
+                {% for tag in entry.tag_list %}
+                    <span style="background:#ffe3de; color:#d95e52; padding:2px 10px; border-radius:12px; margin-right:6px; font-size:0.9em;">{{ tag }}</span>
+                {% endfor %}
+            </p>
+            {% endif %}
+
+            <p>
+                <b>Date & Time:</b>
+                {{ entry.timestamp.strftime('%d-%m-%Y %I:%M %p') }}
+            </p>
+
+            <div style="display:flex; gap:10px; align-items:center;">
+                <a href="{{ url_for('journal.edit_entry', index=entry.id) }}"
+                   style="padding:8px 16px;">Edit</a>
+                <form method="POST"
+                      action="{{ url_for('journal.delete_entry', index=entry.id) }}"
+                      style="margin:0;">
+                    <input type="submit" value="Delete Entry">
+                </form>
+            </div>
+
+        </li>
+        {% else %}
+        <li>
+            <p style="text-align:center;">
+                No diary entries found.
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Entry - JournalJourney</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JournalJourney</h1>
+        <h3>Edit Your Entry</h3>
+
+        <form method="POST" action="{{ url_for('journal.edit_entry', index=entry.id) }}">
+
+            <label for="diary_entry">Update your entry</label>
+
+            <textarea
+                id="diary_entry"
+                name="diary_entry"
+                rows="8"
+                required
+            >{{ entry.text }}</textarea>
+
+            <label for="tags" style="margin-top:14px;">
+                Tags (comma-separated)
+            </label>
+
+            <input
+                type="text"
+                id="tags"
+                name="tags"
+                value="{{ entry.tags or '' }}"
+                placeholder="e.g. gratitude, family, exams"
+                style="width:100%; padding:10px; border:1px solid rgba(131,94,94,0.34); border-radius:8px; box-sizing:border-box; font-family:'Playfair Display',serif;"
+            >
+
+            <br>
+
+            <input type="submit" value="Save Changes">
+
+        </form>
+
+        <br>
+
+        <a style="text-decoration:none;" href="{{ url_for('journal.entries') }}">
+            <input type="button" value="Cancel">
+        </a>
+
+    </div>
+
+</body>
+</html>

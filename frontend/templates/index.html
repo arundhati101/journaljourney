@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JournalJourney</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JournalJourney</h1>
+
+        <h3>Welcome, {{ session['username'] }}</h3>
+
+        {% if streak and streak > 0 %}
+        <p style="text-align:center; color:#ff6f61; font-weight:bold;">
+            🔥 {{ streak }}-day journaling streak — keep it going!
+        </p>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p style="color: green; text-align: center;">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+
+            <label for="diary_entry">
+                Write about your day
+            </label>
+
+            <textarea
+                id="diary_entry"
+                name="diary_entry"
+                rows="8"
+                required
+                placeholder="Dear Diary..."
+            ></textarea>
+
+            <label for="tags" style="margin-top:14px;">
+                Tags (optional, comma-separated)
+            </label>
+
+            <input
+                type="text"
+                id="tags"
+                name="tags"
+                placeholder="e.g. gratitude, family, exams"
+                style="width:100%; padding:10px; border:1px solid rgba(131,94,94,0.34); border-radius:8px; box-sizing:border-box; font-family:'Playfair Display',serif;"
+            >
+
+            <br>
+
+            <input type="submit" value="Add Entry">
+
+        </form>
+
+        <br>
+
+        <a style="text-decoration:none;" href="{{ url_for('journal.entries') }}">
+            <input type="button" value="View Your Entries">
+        </a>
+
+        <br>
+
+        {% if session.user_id %}
+        <a style="text-decoration:none;" href="{{ url_for('dashboard.dashboard') }}">
+            <input type="button" value="Dashboard">
+        </a>
+
+        <br>
+
+        <a style="text-decoration:none;" href="{{ url_for('insights.insights') }}">
+            <input type="button" value="AI Insights">
+        </a>
+
+        <br>
+
+        <a style="text-decoration:none;" href="{{ url_for('journal.wordcloud_page') }}">
+            <input type="button" value="Word Cloud">
+        </a>
+
+        <br>
+        {% endif %}
+
+        <a style="text-decoration:none;" href="{{ url_for('auth.logout') }}">
+            <input type="button" value="Logout">
+        </a>
+
+    </div>
+
+</body>
+</html>

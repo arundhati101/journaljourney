@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JournalJourney - Word Cloud</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+
+    <style>
+        .cloud-wrapper {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            width: 85%;
+            max-width: 900px;
+            margin: 0 auto 18px auto;
+            text-align: center;
+        }
+        .cloud-wrapper img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .cloud-empty {
+            color: #888;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>JournalJourney</h1>
+    <h3>Your Word Cloud</h3>
+
+    <div class="cloud-wrapper">
+        <img
+            src="{{ url_for('journal.wordcloud_image') }}"
+            alt="Word cloud of your journal entries"
+            onerror="this.style.display='none'; document.getElementById('cloud-fallback').style.display='block';"
+        >
+        <p id="cloud-fallback" class="cloud-empty" style="display:none;">
+            Not enough words yet — write a few entries to see your word cloud.
+        </p>
+    </div>
+
+    <div>
+        <a href="{{ url_for('journal.entries') }}">Back to Entries</a>
+    </div>
+
+</body>
+</html>
