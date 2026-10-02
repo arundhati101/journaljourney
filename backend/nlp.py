@@ -34,11 +34,51 @@ _lemmatizer = WordNetLemmatizer()
 _sid = SentimentIntensityAnalyzer()
 
 CATEGORY_KEYWORDS = {
-    "Work": ["work", "job", "office", "project", "task", "meeting", "deadline", "client", "manager", "team"],
-    "Health": ["health", "fitness", "exercise", "gym", "diet", "sleep", "doctor", "meditation"],
-    "Relationships": ["love", "friend", "family", "partner", "relationship", "parents", "siblings"],
-    "Personal Development": ["growth", "learning", "goal", "motivation", "discipline", "confidence", "improve"],
-    "Hobbies": ["music", "reading", "writing", "gaming", "travel", "photography", "drawing", "cooking"],
+    "Work": [
+        "work", "job", "office", "project", "task", "meeting", "deadline", "client", "manager", "team",
+        "career", "business", "colleague", "coworker", "supervisor", "boss", "employee", "employer", "company", "workplace",
+        "shift", "salary", "promotion", "interview", "presentation", "report", "email", "schedule", "budget", "strategy",
+        "contract", "target", "assignment", "responsibility", "productivity", "leadership", "profession", "industry", "marketing", "sales",
+        "finance", "accounting", "coding", "design", "engineering", "research", "analysis", "deployment", "customer", "vendor",
+        "invoice", "desk", "commute", "conference", "negotiation", "recruitment", "hiring", "resignation", "overtime", "workload",
+        "proposal", "deliverable", "department", "organization", "startup", "partnership", "promotion", "training", "presentation", "payroll",
+    ],
+    "Health": [
+        "health", "fitness", "exercise", "gym", "diet", "sleep", "doctor", "meditation", "running", "walking",
+        "nutrition", "wellness", "therapy", "hospital", "illness", "symptom", "recovery", "medication", "yoga", "stretching",
+        "workout", "muscle", "cardio", "strength", "energy", "stress", "anxiety", "depression", "pain", "injury",
+        "surgery", "dentist", "nurse", "patient", "appointment", "prescription", "vitamin", "protein", "hydration", "water",
+        "routine", "rest", "relaxation", "breathing", "posture", "balance", "endurance", "weight", "heart", "meal",
+        "checkup", "treatment", "diagnosis", "infection", "fever", "headache", "medicine", "healthy", "calorie", "cholesterol",
+        "blood", "wellbeing", "mobility", "flexibility", "sickness", "clinic", "therapy", "mental", "physical", "recharge",
+    ],
+    "Relationships": [
+        "love", "friend", "family", "partner", "relationship", "parents", "siblings", "marriage", "spouse", "child",
+        "baby", "cousin", "relative", "friendship", "trust", "communication", "conflict", "support", "conversation", "date",
+        "couple", "wedding", "breakup", "affection", "care", "bond", "connection", "argument", "apology", "forgiveness",
+        "loyalty", "respect", "intimacy", "empathy", "kindness", "companionship", "loneliness", "reunion", "visit", "call",
+        "message", "birthday", "anniversary", "dinner", "gathering", "celebration", "holiday", "parenting", "household", "inlaw",
+        "aunt", "uncle", "niece", "nephew", "grandparent", "grandmother", "grandfather", "mother", "father", "daughter",
+        "son", "brother", "sister", "boyfriend", "girlfriend", "roommate", "neighbor", "community", "social", "relative",
+    ],
+    "Personal Development": [
+        "growth", "learning", "goal", "motivation", "discipline", "confidence", "improve", "skill", "habit", "practice",
+        "progress", "challenge", "achievement", "success", "failure", "reflection", "mindfulness", "knowledge", "course", "study",
+        "education", "training", "development", "focus", "patience", "courage", "resilience", "ambition", "purpose", "planning",
+        "change", "decision", "creativity", "thinking", "problem", "awareness", "organization", "consistency", "effort", "perseverance",
+        "adaptability", "independence", "responsibility", "certificate", "degree", "workshop", "mentor", "coaching", "feedback", "potential",
+        "mindset", "selfcare", "selfesteem", "reflection", "determination", "curiosity", "communication", "confidence", "achievement", "success",
+        "commitment", "initiative", "leadership", "time", "planning", "decisionmaking", "experimentation", "understanding", "mastery", "purposeful",
+    ],
+    "Hobbies": [
+        "music", "reading", "writing", "gaming", "travel", "photography", "drawing", "cooking", "painting", "singing",
+        "dancing", "hiking", "cycling", "gardening", "knitting", "crafts", "puzzle", "chess", "fishing", "swimming",
+        "camping", "baking", "collecting", "film", "movie", "podcast", "instrument", "guitar", "piano", "sculpture",
+        "pottery", "woodworking", "sewing", "origami", "astronomy", "stargazing", "birdwatching", "surfing", "skateboarding", "kayaking",
+        "snorkeling", "bowling", "tennis", "badminton", "football", "basketball", "baseball", "soccer", "volleyball", "boardgame",
+        "videogame", "animation", "blogging", "scrapbooking", "calligraphy", "modelmaking", "brewing", "tasting", "crochet", "embroidery",
+        "jogging", "rowing", "sailing", "climbing", "diy", "decorating", "magic", "comedy", "theater", "acting",
+    ],
 }
 
 
