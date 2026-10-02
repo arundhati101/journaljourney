@@ -1,4 +1,5 @@
 import google.genai as genai
+import time
 
 INSUFFICIENT_ENTRIES_MSG = "Write at least 3 entries this week to unlock your AI insight."
 
@@ -41,9 +42,20 @@ def generate_weekly_insight(entries, api_key, model):
         + "\n".join(entry_lines)
     )
 
-    try:
-        client = genai.Client(api_key=api_key)
-        response = client.models.generate_content(model=model, contents=prompt)
-        return response.text.strip()
-    except Exception as error:
-        return f"Could not generate your insight right now. Please try again later. ({error})"
+    client = genai.Client(api_key=api_key)
+    for attempt in range(3):
+        try:
+            response = client.models.generate_content(model=model, contents=prompt)
+            return response.text.strip()
+        except Exception as error:
+            is_temporary_overload = (
+                getattr(error, 'code', None) == 503
+                or '503 UNAVAILABLE' in str(error)
+                or ('503' in str(error) and 'UNAVAILABLE' in str(error))
+            )
+            if is_temporary_overload and attempt < 2:
+                time.sleep(attempt + 1)
+                continue
+            if is_temporary_overload:
+                return "Gemini is temporarily busy. Please try again in a few minutes."
+            return f"Could not generate your insight right now. Please try again later. ({error})"

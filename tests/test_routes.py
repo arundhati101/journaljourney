@@ -93,3 +93,40 @@ def test_404_returns_error_page(auth_client):
     resp = auth_client.get('/no-such-page')
     assert resp.status_code == 404
     assert b'404' in resp.data
+
+
+def test_insights_retries_instead_of_using_cached_gemini_error(auth_client, monkeypatch):
+    from backend import db
+    from backend.models import WeeklyInsight
+
+    db.session.add(WeeklyInsight(
+        insight_text=("Could not generate your insight right now. Please try again later. "
+                      "(404 NOT_FOUND: retired model)"),
+        user_id=1,
+    ))
+    db.session.commit()
+    monkeypatch.setattr(
+        'backend.routes.insights.generate_weekly_insight',
+        lambda entries, api_key, model: 'A fresh reflection.',
+    )
+
+    response = auth_client.get('/insights')
+
+    assert b'A fresh reflection.' in response.data
+    assert WeeklyInsight.query.count() == 1
+    assert WeeklyInsight.query.first().insight_text == 'A fresh reflection.'
+
+
+def test_insights_does_not_save_new_gemini_error(auth_client, monkeypatch):
+    from backend import db
+    from backend.models import WeeklyInsight
+
+    monkeypatch.setattr(
+        'backend.routes.insights.generate_weekly_insight',
+        lambda entries, api_key, model: 'Could not generate your insight right now. (API error)',
+    )
+
+    response = auth_client.get('/insights')
+
+    assert b'Could not generate your insight right now.' in response.data
+    assert WeeklyInsight.query.count() == 0

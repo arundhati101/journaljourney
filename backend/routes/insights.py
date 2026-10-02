@@ -23,9 +23,16 @@ def insights():
         .first()
     )
     if cached:
-        return render_template('insights.html',
-                               insight_text=cached.insight_text,
-                               generated_on=cached.generated_on)
+        if cached.insight_text.startswith((
+            "Could not generate your insight right now.",
+            "AI insights are unavailable:",
+        )):
+            db.session.delete(cached)
+            db.session.commit()
+        else:
+            return render_template('insights.html',
+                                   insight_text=cached.insight_text,
+                                   generated_on=cached.generated_on)
 
     entries = (
         DiaryEntry.query
@@ -40,6 +47,12 @@ def insights():
     insight_text = generate_weekly_insight(entries, api_key, model)
 
     if insight_text == INSUFFICIENT_ENTRIES_MSG:
+        return render_template('insights.html', insight_text=insight_text, generated_on=None)
+
+    if insight_text.startswith((
+        "Could not generate your insight right now.",
+        "AI insights are unavailable:",
+    )):
         return render_template('insights.html', insight_text=insight_text, generated_on=None)
 
     insight = WeeklyInsight(insight_text=insight_text, user_id=user_id)
